@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/custom-slider.css" />
+    <title>Slider</title>
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/custom-slider">Custom slider</a></li>
+        <li><a href="/custom-slider-v2">Custom slider v2</a></li>
+      </ul>
+    </nav>
+
+    <div class="carousel-wrapper">
+      <div class="carousel">
+        <img
+          src="../assets/img/img-1.jpg"
+          data-src="./assets/img/img-1.jpg"
+          alt=""
+          class="carousel__photo initial"
+          style="display: block"
+          aria-hidden="false"
+          width="1900"
+          height="607"
+          loading="eager"
+        />
+      </div>
+    </div>
+    <section class="description">
+      <h1>Custom slider with loading strategy V1</h1>
+      <p>
+        This page presents simple custom build slider with JSON data load
+        strategy. In this approach only the first image exists in the initial
+        HTML and it has src attribute.
+      </p>
+
+      <p>
+        Script reads JSON data on other images, queues their load and when their
+        are loaded it injects them into the HTML. Only then the slider script is
+        fired.
+      </p>
+    </section>
+
+    <!-- This file should return a function that will initialize the slider functionalities  -->
+    <script src="../assets/js/custom-slider.js"></script>
+    <script src="../assets/js/delayed-load.js"></script>
+    <script>
+      const structure = {
+        wrapperClass: 'carousel-wrapper',
+        containerClass: 'carousel',
+        singleSlideClass: 'carousel__photo',
+      };
+
+      const imagesSrc = [
+        '../assets/img/img-2.jpg',
+        '../assets/img/img-3.jpg',
+        '../assets/img/img-4.jpg',
+        '../assets/img/img-5.jpg',
+      ];
+      const imagesList = [
+        { src: '../assets/img/img-2.jpg', width: 1900, height: 607 },
+        { src: '../assets/img/img-3.jpg', width: 1900, height: 607 },
+        { src: '../assets/img/img-4.jpg', width: 1900, height: 607 },
+        { src: '../assets/img/img-5.jpg', width: 1900, height: 607 },
+      ];
+
+      function addNav(parent) {
+        const next = document.createElement('div');
+        const prev = document.createElement('div');
+
+        next.classList.add('carousel__button--next');
+        prev.classList.add('carousel__button--prev');
+
+        parent.appendChild(next);
+        parent.appendChild(prev);
+      }
+
+      addEventListener('DOMContentLoaded', () => {
+        const carousel = document.querySelector(`.${structure.containerClass}`);
+        appendNewImage(imagesList, structure).then(() => {
+          addNav(carousel);
+          initSlider(document);
+        });
+      });
+    </script>
+  </body>
+</html>

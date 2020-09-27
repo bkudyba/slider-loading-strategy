@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/glide.core.css" />
+    <link rel="stylesheet" href="../assets/css/glide.theme.css" />
+    <title>Glide JS loading strategy</title>
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/custom-slider">Custom slider</a></li>
+        <li><a href="/custom-slider-v2">Custom slider v2</a></li>
+        <li><a href="/glide-js">Glide JS loading strategy</a></li>
+      </ul>
+    </nav>
+
+    <div class="glide">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          <li class="glide__slide">
+            <img
+              src="../assets/img/img-1.jpg"
+              data-src="../assets/img/img-1.jpg"
+              alt=""
+              class="glide__slide--photo initial"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+          <li class="glide__slide">
+            <img
+              src=""
+              data-src="../assets/img/img-2.jpg"
+              alt=""
+              class="glide__slide--photo"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+          <li class="glide__slide">
+            <img
+              src=""
+              data-src="../assets/img/img-3.jpg"
+              alt=""
+              class="glide__slide--photo"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+          <li class="glide__slide">
+            <img
+              src=""
+              data-src="../assets/img/img-4.jpg"
+              alt=""
+              class="glide__slide--photo"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+          <li class="glide__slide">
+            <img
+              src=""
+              data-src="../assets/img/img-5.jpg"
+              alt=""
+              class="glide__slide--photo"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+        </ul>
+      </div>
+    </div>
+    <section class="description">
+      <h1>Glide JS with defered loading strategy</h1>
+      <p>
+        This example uses <a href="https://glidejs.com/">Glide JS</a> to handle
+        the slider. In this approach all of the img tags are present in the
+        source code, but only the first one has src attribute implemented. All
+        other img elements have their src URL hidden in the data-src attribute.
+      </p>
+
+      <p>
+        Script reads data-src attributes, queues the load of images and only
+        when they are loaded it initiates Glide JS.
+      </p>
+    </section>
+
+    <!-- This file should return a function that will initialize the slider functionalities  -->
+    <script src="../assets/js/glide.min.js"></script>
+    <script src="../assets/js/delayed-load.js"></script>
+    <script>
+      const structure = {
+        wrapperClass: 'carousel-wrapper',
+        containerClass: 'glide',
+        singleSlideClass: 'glide__slide--photo',
+      };
+
+      function addNav(parent) {
+        const next = document.createElement('button');
+        const prev = document.createElement('button');
+
+        next.classList.add('glide__arrow');
+        next.classList.add('glide__arrow--right');
+        prev.classList.add('glide__arrow');
+        prev.classList.add('glide__arrow--left');
+        next.setAttribute('data-glide-dir', '>');
+        next.textContent = '>';
+        prev.setAttribute('data-glide-dir', '<');
+        prev.textContent = '<';
+
+        const arrows = document.createElement('div');
+        arrows.classList.add('glide__arrows');
+        arrows.setAttribute('data-glide-el', 'controls');
+
+        arrows.appendChild(next);
+        arrows.appendChild(prev);
+        parent.appendChild(arrows);
+        return;
+      }
+
+      addEventListener('DOMContentLoaded', () => {
+        const glide = document.querySelector(`.${structure.containerClass}`);
+        console.log('DCL');
+        const imgList = document.querySelectorAll(
+          `.${structure.singleSlideClass}:not(.initial)`,
+        );
+        console.log(imgList);
+        appendExistingImage(imgList).then(() => {
+          addNav(glide);
+          new Glide('.glide').mount();
+        });
+      });
+    </script>
+  </body>
+</html>
