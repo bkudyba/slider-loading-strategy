@@ -54,7 +54,6 @@ function appendExistingImage(imgList) {
   return new Promise((resolve, reject) => {
     // TODO: Handle errors
     const loadQueue = [];
-    console.log('inside the load');
     imgList.forEach((img) => {
       loadQueue.push(loadExistingImage(img));
     });

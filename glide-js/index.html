@@ -139,15 +139,28 @@
         return;
       }
 
+      function addBullets(parent, number) {
+        const imgNum = number + 1;
+        const bullets = document.createElement('div');
+        bullets.classList.add('glide__bullets');
+        bullets.setAttribute('data-glide-el', 'controls[nav]');
+        for (let i = 0; i < imgNum; i++) {
+          const dot = document.createElement('button');
+          dot.classList.add('glide__bullet');
+          dot.setAttribute('data-glide-dir', `=${i}`);
+          bullets.appendChild(dot);
+        }
+        parent.appendChild(bullets);
+      }
+
       addEventListener('DOMContentLoaded', () => {
         const glide = document.querySelector(`.${structure.containerClass}`);
-        console.log('DCL');
         const imgList = document.querySelectorAll(
           `.${structure.singleSlideClass}:not(.initial)`,
         );
-        console.log(imgList);
         appendExistingImage(imgList).then(() => {
           addNav(glide);
+          addBullets(glide, imgList.length);
           new Glide('.glide').mount();
         });
       });
