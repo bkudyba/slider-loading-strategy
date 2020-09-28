@@ -3,11 +3,7 @@ function loadNewImage(image) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.addEventListener('load', () => resolve(img));
-
-    // Simulate slow connection
-    setTimeout(() => {
-      img.src = image.src;
-    }, 1000);
+    img.src = image.src;
   });
 }
 
@@ -16,10 +12,7 @@ function loadExistingImage(img) {
   return new Promise((resolve, reject) => {
     const { src } = img.dataset;
     img.addEventListener('load', () => resolve(img));
-    // Simulate slow connection
-    setTimeout(() => {
-      img.src = src;
-    }, 1000);
+    img.src = src;
   });
 }
 
