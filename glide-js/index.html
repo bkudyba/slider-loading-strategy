@@ -114,14 +114,17 @@
 
     <!-- This file should return a function that will initialize the slider functionalities  -->
     <script src="../assets/js/glide.min.js"></script>
+    <!-- This file loads helper functions that will load the images -->
     <script src="../assets/js/delayed-load.js"></script>
     <script>
+      // This object describes the HTML/CSS structure of the slider
       const structure = {
         wrapperClass: 'carousel-wrapper',
         containerClass: 'glide',
         singleSlideClass: 'glide__slide--photo',
       };
 
+      // This functions creates the navigation interface for the slider
       function addNav(parent) {
         const next = document.createElement('button');
         const prev = document.createElement('button');
@@ -145,6 +148,7 @@
         return;
       }
 
+      // This functions creates the navigation interface for the slider
       function addBullets(parent, number) {
         const imgNum = number + 1;
         const bullets = document.createElement('div');
@@ -159,14 +163,20 @@
         parent.appendChild(bullets);
       }
 
+      // This event listener can be set to any property or attached to any other object in the DOM
       addEventListener('DOMContentLoaded', () => {
         const glide = document.querySelector(`.${structure.containerClass}`);
+        // Read all img tags inside the carousel element
+        // Exclude the initial one with class "initial"
         const imgList = document.querySelectorAll(
           `.${structure.singleSlideClass}:not(.initial)`,
         );
+        // Load images and update src attributes of existing img tags
         appendExistingImage(imgList).then(() => {
+          // Create slider navigation
           addNav(glide);
           addBullets(glide, imgList.length);
+          // Initialize Glide JS
           new Glide('.glide', {
             type: 'carousel',
           }).mount();

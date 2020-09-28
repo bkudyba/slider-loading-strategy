@@ -49,7 +49,7 @@
       </p>
 
       <p>
-        Script reads JSON data on other images, queues their load and when their
+        Script reads JSON data for other images, queues their load and when they
         are loaded it injects them into the HTML. Only then the slider script is
         fired.
       </p>
@@ -64,20 +64,17 @@
 
     <!-- This file should return a function that will initialize the slider functionalities  -->
     <script src="../assets/js/custom-slider.js"></script>
+    <!-- This file loads helper functions that will load the images -->
     <script src="../assets/js/delayed-load.js"></script>
     <script>
+      // This object describes the HTML/CSS structure of the slider
       const structure = {
         wrapperClass: 'carousel-wrapper',
         containerClass: 'carousel',
         singleSlideClass: 'carousel__photo',
       };
 
-      const imagesSrc = [
-        '../assets/img/img-2.jpg',
-        '../assets/img/img-3.jpg',
-        '../assets/img/img-4.jpg',
-        '../assets/img/img-5.jpg',
-      ];
+      // This data imitates JSON data for images that can be pulled from the database
       const imagesList = [
         { src: '../assets/img/img-2.jpg', width: 1900, height: 607 },
         { src: '../assets/img/img-3.jpg', width: 1900, height: 607 },
@@ -85,6 +82,7 @@
         { src: '../assets/img/img-5.jpg', width: 1900, height: 607 },
       ];
 
+      // This functions creates the navigation interface for the slider
       function addNav(parent) {
         const next = document.createElement('div');
         const prev = document.createElement('div');
@@ -96,10 +94,14 @@
         parent.appendChild(prev);
       }
 
+      // This event listener can be set to any property or attached to any other object in the DOM
       addEventListener('DOMContentLoaded', () => {
         const carousel = document.querySelector(`.${structure.containerClass}`);
+        // Load and inject new img tags to the DOM
         appendNewImage(imagesList, structure).then(() => {
+          // Create slider navigation
           addNav(carousel);
+          // Initialize slider functionalities
           initSlider(document);
         });
       });

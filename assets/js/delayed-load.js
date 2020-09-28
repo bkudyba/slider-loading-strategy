@@ -23,12 +23,14 @@ function loadExistingImage(img) {
 // singleSlideClass: class name string,
 // }
 
-// Assume that srcList is an array of src strings
+// Assume that imagesList is an array of objects
 function appendNewImage(imagesList, structure) {
   return new Promise((resolve, reject) => {
     // TODO: Handle errors
     const loadQueue = [];
     const parent = document.querySelector(`.${structure.containerClass}`);
+
+    // Create an array of promises
     imagesList.forEach((image) => {
       loadQueue.push(
         loadNewImage(image).then((img) => {
@@ -37,6 +39,8 @@ function appendNewImage(imagesList, structure) {
         }),
       );
     });
+
+    // Wait for the execution of the promises array
     Promise.all(loadQueue).then(() => {
       resolve(loadQueue);
     });
@@ -47,9 +51,13 @@ function appendExistingImage(imgList) {
   return new Promise((resolve, reject) => {
     // TODO: Handle errors
     const loadQueue = [];
+
+    // Create an array of promises
     imgList.forEach((img) => {
       loadQueue.push(loadExistingImage(img));
     });
+
+    // Wait for the execution of the promises array
     Promise.all(loadQueue).then(() => {
       resolve(loadQueue);
     });

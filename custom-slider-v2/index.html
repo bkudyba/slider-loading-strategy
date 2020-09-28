@@ -94,8 +94,8 @@
       </p>
 
       <p>
-        Script reads data-src attributes, queues the load of images and only
-        when they are loaded it starts the slider script.
+        Script reads data-src attributes, queues the load of images, injects the
+        src value and only when they are loaded it starts the slider script.
       </p>
       <p>
         Custom slider is built based on
@@ -108,14 +108,17 @@
 
     <!-- This file should return a function that will initialize the slider functionalities  -->
     <script src="../assets/js/custom-slider.js"></script>
+    <!-- This file loads helper functions that will load the images -->
     <script src="../assets/js/delayed-load.js"></script>
     <script>
+      // This object describes the HTML/CSS structure of the slider
       const structure = {
         wrapperClass: 'carousel-wrapper',
         containerClass: 'carousel',
         singleSlideClass: 'carousel__photo',
       };
 
+      // This functions creates the navigation interface for the slider
       function addNav(parent) {
         const next = document.createElement('div');
         const prev = document.createElement('div');
@@ -127,13 +130,19 @@
         parent.appendChild(prev);
       }
 
+      // This event listener can be set to any property or attached to any other object in the DOM
       addEventListener('DOMContentLoaded', () => {
         const carousel = document.querySelector(`.${structure.containerClass}`);
-        const imgList = document.querySelectorAll(
+        // Read all img tags inside the carousel element
+        // Exclude the initial one with class "initial"
+        const imgList = carousel.querySelectorAll(
           `.${structure.singleSlideClass}:not(.initial)`,
         );
+        // Load images and update src attributes of existing img tags
         appendExistingImage(imgList).then(() => {
+          // Create slider navigation
           addNav(carousel);
+          // Initialize slider functionalities
           initSlider(document);
         });
       });
