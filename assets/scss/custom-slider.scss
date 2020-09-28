@@ -4,14 +4,14 @@
   &-wrapper {
     overflow: hidden;
     width: 100%;
-    padding: 2rem;
-    background: repeating-linear-gradient(
-      -55deg,
-      #ddd,
-      #ddd 10px,
-      #ccc 10px,
-      #ccc 15px
-    );
+    // padding: 2rem;
+    // background: repeating-linear-gradient(
+    //   -55deg,
+    //   #ddd,
+    //   #ddd 10px,
+    //   #ccc 10px,
+    //   #ccc 15px
+    // );
 
     * {
       box-sizing: border-box;
@@ -28,7 +28,13 @@
     // margin: 1rem 4rem;
     z-index: 100;
     transition: transform 0.5s, opacity 0.5s, z-index 0.5s;
-    background-color: #ccc;
+    background: repeating-linear-gradient(
+      -55deg,
+      #ddd,
+      #ddd 10px,
+      #ccc 10px,
+      #ccc 15px
+    );
 
     &.initial,
     &.active {
@@ -78,11 +84,11 @@
   }
 
   &__button--prev {
-    left: 0;
+    left: 1rem;
   }
 
   &__button--next {
-    right: 0;
+    right: 1rem;
     &::after {
       left: 47%;
       transform: translate(-50%, -50%) rotate(-45deg);
