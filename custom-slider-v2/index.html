@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/custom-slider.css" />
+    <title>Custom slider with V2 load strategy</title>
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li><a href="../">Home</a></li>
+        <li>
+          <a href="../custom-slider">Custom slider</a>
+        </li>
+        <li>
+          <a href="../custom-slider-v2">Custom slider v2</a>
+        </li>
+        <li>
+          <a href="../glide-js">Glide JS loading strategy</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="carousel-wrapper">
+      <div class="carousel">
+        <img
+          src="../assets/img/img-1.jpg"
+          data-src="../assets/img/img-1.jpg"
+          alt=""
+          class="carousel__photo initial"
+          style="display: block"
+          aria-hidden="false"
+          width="1900"
+          height="607"
+          loading="eager"
+        />
+        <img
+          src=""
+          data-src="../assets/img/img-2.jpg"
+          alt=""
+          class="carousel__photo"
+          style="display: block"
+          aria-hidden="false"
+          width="1900"
+          height="607"
+          loading="eager"
+        />
+        <img
+          src=""
+          data-src="../assets/img/img-3.jpg"
+          alt=""
+          class="carousel__photo"
+          style="display: block"
+          aria-hidden="false"
+          width="1900"
+          height="607"
+          loading="eager"
+        />
+        <img
+          src=""
+          data-src="../assets/img/img-4.jpg"
+          alt=""
+          class="carousel__photo"
+          style="display: block"
+          aria-hidden="false"
+          width="1900"
+          height="607"
+          loading="eager"
+        />
+        <img
+          src=""
+          data-src="../assets/img/img-5.jpg"
+          alt=""
+          class="carousel__photo"
+          style="display: block"
+          aria-hidden="false"
+          width="1900"
+          height="607"
+          loading="eager"
+        />
+      </div>
+    </div>
+    <section class="description">
+      <h1>Custom slider with loading strategy V2</h1>
+      <p>
+        This page presents simple custom build slider with data-src strategy. In
+        this approach all of the img tags are present in the source code, but
+        only the first one has src attribute implemented. All other img elements
+        have their src URL hidden in the data-src attribute.
+      </p>
+
+      <p>
+        Script reads data-src attributes, queues the load of images and only
+        when they are loaded it starts the slider script.
+      </p>
+    </section>
+
+    <!-- This file should return a function that will initialize the slider functionalities  -->
+    <script src="../assets/js/custom-slider.js"></script>
+    <script src="../assets/js/delayed-load.js"></script>
+    <script>
+      const structure = {
+        wrapperClass: 'carousel-wrapper',
+        containerClass: 'carousel',
+        singleSlideClass: 'carousel__photo',
+      };
+
+      function addNav(parent) {
+        const next = document.createElement('div');
+        const prev = document.createElement('div');
+
+        next.classList.add('carousel__button--next');
+        prev.classList.add('carousel__button--prev');
+
+        parent.appendChild(next);
+        parent.appendChild(prev);
+      }
+
+      addEventListener('DOMContentLoaded', () => {
+        const carousel = document.querySelector(`.${structure.containerClass}`);
+        const imgList = document.querySelectorAll(
+          `.${structure.singleSlideClass}:not(.initial)`,
+        );
+        appendExistingImage(imgList).then(() => {
+          addNav(carousel);
+          initSlider(document);
+        });
+      });
+    </script>
+  </body>
+</html>

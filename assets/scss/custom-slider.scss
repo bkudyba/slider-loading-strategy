@@ -1,0 +1,91 @@
+.carousel {
+  transform-style: preserve-3d;
+
+  &-wrapper {
+    overflow: hidden;
+    width: 100%;
+    padding: 2rem;
+    background: repeating-linear-gradient(
+      -55deg,
+      #ddd,
+      #ddd 10px,
+      #ccc 10px,
+      #ccc 15px
+    );
+
+    * {
+      box-sizing: border-box;
+    }
+  }
+
+  &__photo {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    // margin: 1rem 4rem;
+    z-index: 100;
+    transition: transform 0.5s, opacity 0.5s, z-index 0.5s;
+    background-color: #ccc;
+
+    &.initial,
+    &.active {
+      opacity: 1;
+      position: relative;
+      z-index: 900;
+    }
+
+    &.prev,
+    &.next {
+      z-index: 800;
+    }
+
+    &.prev {
+      transform: translateX(-100%); /* Move 'prev' item to the left */
+    }
+
+    &.next {
+      transform: translateX(100%); /* Move 'next' item to the right */
+    }
+  }
+
+  &__button--prev,
+  &__button--next {
+    position: absolute;
+    top: 50%;
+    width: 3rem;
+    height: 3rem;
+    background-color: #eee;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1001; /* Sit on top of everything */
+    border: 1px solid #222;
+
+    &::after {
+      content: ' ';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: 50%;
+      left: 54%;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      transform: translate(-50%, -50%) rotate(135deg);
+    }
+  }
+
+  &__button--prev {
+    left: 0;
+  }
+
+  &__button--next {
+    right: 0;
+    &::after {
+      left: 47%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+}
