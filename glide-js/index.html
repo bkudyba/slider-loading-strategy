@@ -167,7 +167,9 @@
         appendExistingImage(imgList).then(() => {
           addNav(glide);
           addBullets(glide, imgList.length);
-          new Glide('.glide').mount();
+          new Glide('.glide', {
+            type: 'carousel',
+          }).mount();
         });
       });
     </script>
