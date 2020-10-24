@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/flexslider.css" />
+    <title>Flex slider loading strategy</title>
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li><a href="../">Home</a></li>
+        <li>
+          <a href="../custom-slider">Custom slider</a>
+        </li>
+        <li>
+          <a href="../custom-slider-v2">Custom slider v2</a>
+        </li>
+        <li>
+          <a href="../glide-js">Glide JS loading strategy</a>
+        </li>
+        <li>
+          <a href="../flex-slider">Flex slider loading strategy</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="flexslider">
+      <div class="flex-viewport">
+        <ul class="slides">
+          <li class="flex__slide initial absolute">
+            <img
+              src="../assets/img/img-1.jpg"
+              data-src="../assets/img/img-1.jpg"
+              alt=""
+              class="flex__slide--photo initial"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+          <li class="flex__slide absolute">
+            <img
+              src=""
+              data-src="../assets/img/img-2.jpg"
+              alt=""
+              class="flex__slide--photo"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+          <li class="flex__slide absolute">
+            <img
+              src=""
+              data-src="../assets/img/img-3.jpg"
+              alt=""
+              class="flex__slide--photo"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+          <li class="flex__slide absolute">
+            <img
+              src=""
+              data-src="../assets/img/img-4.jpg"
+              alt=""
+              class="flex__slide--photo"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+          <li class="flex__slide absolute">
+            <img
+              src=""
+              data-src="../assets/img/img-5.jpg"
+              alt=""
+              class="flex__slide--photo"
+              style="display: block"
+              aria-hidden="false"
+              width="1900"
+              height="607"
+              loading="eager"
+            />
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="description">
+      <h1>Glide JS with defered loading strategy</h1>
+      <p>
+        This example uses <a href="https://glidejs.com/">Glide JS</a> to handle
+        the slider. In this approach all of the img tags are present in the
+        source code, but only the first one has src attribute implemented. All
+        other img elements have their src URL hidden in the data-src attribute.
+      </p>
+
+      <p>
+        Script reads data-src attributes, queues the load of images and only
+        when they are loaded it initiates Glide JS.
+      </p>
+    </section>
+
+    <script src="../assets/js/jquery-3.5.1.min.js"></script>
+    <!-- This file should return a function that will initialize the slider functionalities  -->
+    <script src="../assets/js/jquery.flexslider.js"></script>
+    <!-- This file loads helper functions that will load the images -->
+    <script src="../assets/js/delayed-load.js"></script>
+    <script>
+      // This object describes the HTML/CSS structure of the slider
+      const structure = {
+        wrapperClass: 'flexslider',
+        containerClass: 'flex-viewport',
+        singleSlideClass: 'flex__slide--photo',
+      };
+
+      // This functions creates the navigation interface for the slider
+      function addNav(parent) {
+        const next = document.createElement('a');
+        const prev = document.createElement('a');
+
+        next.classList.add('flex-next');
+        prev.classList.add('flex-prev');
+
+        next.setAttribute('href', '#');
+        // next.textContent = '>';
+        prev.setAttribute('href', '#');
+        // prev.textContent = '<';
+
+        const arrows = document.createElement('ul');
+        arrows.classList.add('flex-direction-nav');
+
+        const arrowNext = document.createElement('li');
+        arrowNext.classList.add('flex-nav-next');
+
+        const arrowPrev = document.createElement('li');
+        arrowPrev.classList.add('flex-nav-prev');
+
+        arrowPrev.appendChild(prev);
+        arrowNext.appendChild(next);
+        arrows.appendChild(arrowPrev);
+        arrows.appendChild(arrowNext);
+        parent.appendChild(arrows);
+        return;
+      }
+
+      // This functions creates the navigation interface for the slider
+      function addBullets(parent, number) {
+        const imgNum = number + 1;
+        const bullets = document.createElement('div');
+        bullets.classList.add('glide__bullets');
+        bullets.setAttribute('data-glide-el', 'controls[nav]');
+        for (let i = 0; i < imgNum; i++) {
+          const dot = document.createElement('button');
+          dot.classList.add('glide__bullet');
+          dot.setAttribute('data-glide-dir', `=${i}`);
+          bullets.appendChild(dot);
+        }
+        parent.appendChild(bullets);
+      }
+
+      // This event listener can be set to any property or attached to any other object in the DOM
+      addEventListener('DOMContentLoaded', () => {
+        const slider = document.querySelector(`.${structure.containerClass}`);
+        // Read all img tags inside the carousel element
+        // Exclude the initial one with class "initial"
+        const imgList = document.querySelectorAll(
+          `.${structure.singleSlideClass}:not(.initial)`,
+        );
+        // Load images and update src attributes of existing img tags
+        appendExistingImage(imgList).then(() => {
+          // Create slider navigation
+          addNav(slider);
+          // addBullets(glide, imgList.length);
+          // Initialize Glide JS
+          $('.flexslider').flexslider({
+            animation: 'slide',
+            controlsContainer: $('.flex-direction-nav'),
+            customDirectionNav: $('.flex-direction-nav a'),
+            start: function () {
+              const slides = document.querySelectorAll('.flex__slide');
+              slides.forEach((li) => {
+                li.classList.remove('absolute');
+              });
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
