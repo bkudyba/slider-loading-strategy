@@ -17,11 +17,11 @@ nav {
   background-color: #ccc;
   font-family: sans-serif;
   font-size: 1.2rem;
-  overflow-x: hidden;
+  overflow-x: auto;
 
   ul {
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     width: 100%;
 
