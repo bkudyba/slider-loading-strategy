@@ -31,7 +31,7 @@
     <div class="flexslider">
       <div class="flex-viewport">
         <ul class="slides">
-          <li class="flex__slide initial absolute">
+          <li class="flex__slide initial">
             <img
               src="../assets/img/img-1.jpg"
               srcset="
@@ -44,7 +44,6 @@
               data-src="../assets/img/img-1.jpg"
               alt=""
               class="flex__slide--photo initial"
-              style="display: block"
               aria-hidden="false"
               width="1900"
               height="607"
@@ -119,7 +118,7 @@
 
       <p>
         Script reads data-src attributes, queues the load of images and only
-        when they are loaded it initiates Glide JS.
+        when they are loaded it initiates Flex Slider.
       </p>
     </section>
 
@@ -193,8 +192,7 @@
         appendExistingImage(imgList).then(() => {
           // Create slider navigation
           addNav(slider);
-          // addBullets(glide, imgList.length);
-          // Initialize Glide JS
+          // Initialize Flex slider
           $('.flexslider').flexslider({
             animation: 'slide',
             controlsContainer: $('.flex-direction-nav'),
